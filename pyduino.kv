@@ -51,7 +51,7 @@
                     rows: 1
                     padding: [2,4,2,2]
                     size_hint_y: None
-                    height: 30
+                    height: 35
                     canvas:
                         Color:
                             rgba: (0, 0, 0, 0.2)
@@ -75,11 +75,13 @@
                         TextInput:
                             id: port
                             multiline: False
+                            text: '/dev/ttyUSB0'
                         Label:
                             text: "Bitrate:"
                         TextInput:
                             id: bitrate
                             multiline: False
+                            text: '9600'
                         Button:
                             id: connect
                             text: "Connect"
