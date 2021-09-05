@@ -1,0 +1,140 @@
+<MenuScreen>:
+    #Main Grid
+    GridLayout:
+        cols: 1
+        size: root.width, root.height
+        padding: [5,5,5,5]
+        canvas:
+            Color:
+                rgba: (88/255, 86/255, 214/255, 1)
+            RoundedRectangle:
+                pos: self.pos
+                size: self.size
+                radius: [5,]
+
+        GridLayout:
+            cols: 1
+            padding: [2,2,2,2]
+            size_hint_y: None
+            height: root.height/5
+            canvas:
+                Color:
+                    rgba: (0, 0, 0, 0.5)
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [5,]
+            
+            #Connection Interface
+            GridLayout:
+                rows: 2
+                canvas:
+                    Color:
+                        rgba: (0, 122/255, 1, 1)
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [5,]
+
+                GridLayout:
+                    cols: 3
+
+                    Label:
+                        text: "Common ports:\n#In Linux: /dev/ttyUSB0\n#In Windows: COM0"
+                    Label:
+                        text: "Common Bitrate:\n#9600"
+                    Label:
+                        id: connectstatus
+                        text: "No connection stablished"
+
+                GridLayout:
+                    rows: 1
+                    padding: [2,4,2,2]
+                    size_hint_y: None
+                    height: 30
+                    canvas:
+                        Color:
+                            rgba: (0, 0, 0, 0.2)
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [5,]
+
+                    GridLayout:
+                        rows: 1
+                        canvas:
+                            Color:
+                                rgba: (90/255, 200/255, 250/255, 1)
+                            RoundedRectangle:
+                                pos: self.pos
+                                size: self.size
+                                radius: [4,]
+
+                        Label: 
+                            text: "Port:"
+                        TextInput:
+                            id: port
+                            multiline: False
+                        Label:
+                            text: "Bitrate:"
+                        TextInput:
+                            id: bitrate
+                            multiline: False
+                        Button:
+                            id: connect
+                            text: "Connect"
+
+        #Terminal Interface
+        GridLayout:
+            cols: 1
+            padding: [2,0,2,2]
+            canvas:
+                Color:
+                    rgba: (0, 0, 0, 0.2)
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [5,]
+
+            GridLayout:
+                rows: 2
+                padding: [4,4,4,2]
+                canvas:
+                    Color:
+                        rgba: (90/255, 200/255, 250/255, 1)
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [5,]
+
+                GridLayout:
+                    cols: 1
+                    canvas:
+                        Color:
+                            rgba: (1, 1, 1, 1)
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [5,]
+                    
+                    Label:
+                        id: output
+                        color: (0,0,0)
+                        text: "No data recived yet"
+
+                GridLayout:
+                    cols: 1
+                    padding: [0,4,0,4]
+                    size_hint_y: None
+                    height: 60
+
+                    TextInput:
+                        id: inputcommand
+                        multiline: False
+                    GridLayout:
+                        cols: 2
+                        Label:
+                            text: "Send command:"
+                        Button:
+                            id: send
+                            text: "Send"
