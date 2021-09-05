@@ -12,47 +12,65 @@ from kivy.uix.widget import Widget
 from kivy.graphics import Color, Rectangle
 from kivy.clock import Clock
 
-serial_port = '/dev/ttyUSB0'
-serial_bts = 9600
-printdata = ''
-arduino = sr.Serial(port = serial_port, baudrate = serial_bts, timeout = .1)
-
 class MenuScreen(Widget):
     pass
 
 class PyduinoApp(App):
     def build(self):
+        self.conection = False
+        self.arduino = None
+        self.serial_port = '/dev/ttyUSB0'
+        self.serial_bts = 9600
         return MenuScreen()
 
     def on_start(self):
         Clock.schedule_interval(self.ReadData, 0.5)
 
     def ReadData(self, *args):
-        data = arduino.readline()
-        if (data != b''):
-            printdata = str(data)
-            print("Recived data: " + printdata)
-            self.root.ids.output.text = printdata
+        try:
+            if (self.conection == True and self.arduino != None):
+                data = self.arduino.readline()
+                if (data != b''):
+                    self.root.ids.output.text = str(data)
+        except Exception as e:
+            self.root.ids.connectstatus.text = "Arduino disconected"
+            self.root.ids.connect.text = "Conect"
+            self.conection = False
+            self.arduino = None
+            print(e)
+    
+    def WriteData(self):
+        try:
+            if (self.conection == True and self.arduino != None):
+                if (str(self.root.ids.inputcommand) != ''):
+                    self.arduino.write(bytes(str(self.root.ids.inputcommand.text), 'utf-8'))
+        except Exception as e:
+            self.root.ids.connectstatus.text = "Arduino disconected"
+            self.root.ids.connect.text = "Conect"
+            self.conection = False
+            self.arduino = None
+            print(e)
 
-def WriteData(*args):
-    flag = True
-
-    while (flag):
-        command = input("Command (Exit --> E): ")
-        arduino.write(bytes(command, 'utf-8'))
-
-def Connect():
-    t2 = threading.Thread(target = WriteData, args = ("Write",), daemon = True)
-    t2.start()
+    def Conection(self):
+        if (self.conection == False):
+            try:
+                self.arduino = sr.Serial(port = self.serial_port, baudrate = self.serial_bts, timeout = .1)
+                self.conection = True
+                self.root.ids.connectstatus.text = "The conection was succesful"
+                self.root.ids.connect.text = "Disconect"
+            except Exception as e:
+                self.root.ids.connectstatus.text = "Error on conection"
+                self.conection = False
+                self.arduino = None
+                print(e)
+        else:
+            self.root.ids.connectstatus.text = "Arduino disconected"
+            self.root.ids.connect.text = "Conect"
+            self.arduino = None
+            self.conection = False
 
 def StartGui():
     PyduinoApp().run()
 
 if __name__ == "__main__":
-
-    try:
-        Connect()
-    except Exception as e:
-        print(e)
-
     StartGui()

@@ -83,6 +83,7 @@
                         Button:
                             id: connect
                             text: "Connect"
+                            on_press: app.Conection()
 
         #Terminal Interface
         GridLayout:
@@ -138,3 +139,4 @@
                         Button:
                             id: send
                             text: "Send"
+                            on_press: app.WriteData()
