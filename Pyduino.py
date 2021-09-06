@@ -19,6 +19,7 @@ class PyduinoApp(App):
     def build(self):
         self.conection = False
         self.arduino = None
+        self.terminal_output = []
         self.serial_port = '/dev/ttyUSB0'
         self.serial_bts = 9600
         return MenuScreen()
@@ -31,7 +32,14 @@ class PyduinoApp(App):
             if (self.conection == True and self.arduino != None):
                 data = self.arduino.readline()
                 if (data != b''):
-                    self.root.ids.output.text = str(data)
+                    self.terminal_output.append(" " + str(data))
+                    if (len(self.terminal_output) > 21):
+                        self.terminal_output.pop(0)
+                    
+                    finalstring = ""
+                    for newline in self.terminal_output:
+                        finalstring = finalstring + newline + "\n"
+                    self.root.ids.output.text = finalstring
         except Exception as e:
             self.root.ids.connectstatus.text = "Arduino disconected"
             self.root.ids.connect.text = "Conect"
@@ -54,6 +62,8 @@ class PyduinoApp(App):
     def Conection(self):
         if (self.conection == False):
             try:
+                self.serial_port = self.root.ids.port.text
+                self.serial_bts = int(self.root.ids.bitrate.text)
                 self.arduino = sr.Serial(port = self.serial_port, baudrate = self.serial_bts, timeout = .1)
                 self.conection = True
                 self.root.ids.connectstatus.text = "The conection was succesful"
