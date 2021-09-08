@@ -59,6 +59,17 @@ class PyduinoApp(App):
             self.arduino = None
             print(e)
 
+    def WriteFromButton(self, buttoncommand):
+        try:
+            if (self.conection == True and self.arduino != None):
+                self.arduino.write(bytes(str(buttoncommand), 'utf-8'))
+        except Exception as e:
+            self.root.ids.connectstatus.text = "Arduino disconected"
+            self.root.ids.connect.text = "Conect"
+            self.conection = False
+            self.arduino = None
+            print(e)
+
     def Conection(self):
         if (self.conection == False):
             try:

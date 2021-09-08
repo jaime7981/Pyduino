@@ -72,8 +72,15 @@ void loop() {
     if (Serial.available() > 0){
         data = Serial.read();
         InstructionParse();
-        if (data == 10){
+        if (data == 101){
             ExecuteInstruction();
+        }
+        else if (data == 10){
+          valid_instruction = false;
+          separatorcounter = 0;
+          instruction = "";
+          target = "";
+          targetvalue = "";
         }
     }
     interrupts();
@@ -193,13 +200,13 @@ void InstructionParse(){
         separatorcounter ++;
     }
     else if (separatorcounter == 0){
-        instruction = instruction + data;
+        instruction = instruction + (char)data;
     }
     else if (separatorcounter == 1){
-        target = target + data;
+        target = target + (char)data;
     }
     else if (separatorcounter == 2){
-        targetvalue = targetvalue + data;
+        targetvalue = targetvalue + (char)data;
     }
 }
 
@@ -208,7 +215,7 @@ void ExecuteInstruction(){
         Serial.print("Instruction: ");
         Serial.println(instruction);
         if (AllOff()){
-        valid_instruction = true;
+          valid_instruction = true;
         }
     }
     else if (separatorcounter == 1){
@@ -343,7 +350,7 @@ bool LedFrecuency(){
 
 //Set all values to 0
 bool AllOff(){
-    if (instruction == "O\n"){
+    if (instruction == "Oe"){
         Serial.println("Shuting down all leds");
         L1_digital = 0;
         L1_analog = 0;

@@ -100,7 +100,7 @@
                     radius: [5,]
 
             GridLayout:
-                rows: 2
+                rows: 4
                 padding: [4,4,4,2]
                 canvas:
                     Color:
@@ -111,15 +111,90 @@
                         radius: [5,]
 
                 GridLayout:
-                    cols: 1
+                    cols: 6
+                    rows: 3
+                    padding: [2,2,2,0]
                     canvas:
                         Color:
-                            rgba: (1, 1, 1, 1)
+                            rgba: (90/255, 200/255, 250/255, 1)
                         RoundedRectangle:
                             pos: self.pos
                             size: self.size
                             radius: [5,]
-                    
+
+                    Button:
+                        id: com1
+                        text: "L1: Analog 20"
+                        on_press: app.WriteFromButton("A,L1,20e")
+                    Button:
+                        id: com2
+                        text: "L1: Analog 80"
+                        on_press: app.WriteFromButton("A,L1,80e")
+                    Button:
+                        id: com3
+                        text: "L1: Blink 400ms"
+                        on_press: app.WriteFromButton("B,L1,40e")
+
+                    Button:
+                        id: com4
+                        text: "L2: Analog 40"
+                        on_press: app.WriteFromButton("A,L2,40e")
+                    Button:
+                        id: com5
+                        text: "L2: Analog 80"
+                        on_press: app.WriteFromButton("A,L2,80e")
+                    Button:
+                        id: com6
+                        text: "L2: Blink 200ms"
+                        on_press: app.WriteFromButton("B,L2,20e")
+
+                    Button:
+                        id: com7
+                        text: "L1: Digital Low"
+                        on_press: app.WriteFromButton("W,L1,0e")
+                    Button:
+                        id: com8
+                        text: "L1: Digital High"
+                        on_press: app.WriteFromButton("W,L1,1e")
+                    Button:
+                        id: com9
+                        text: "L1: Blink 800ms"
+                        on_press: app.WriteFromButton("B,L1,80e")
+
+                    Button:
+                        id: com10
+                        text: "L2: Digital Low"
+                        on_press: app.WriteFromButton("W,L2,0e")
+                    Button:
+                        id: com11
+                        text: "L2: Digital High"
+                        on_press: app.WriteFromButton("W,L2,1e")
+                    Button:
+                        id: com12
+                        text: "L2: Blink 1000ms"
+                        on_press: app.WriteFromButton("B,L2,100e")
+                
+                GridLayout:
+                    rows: 1
+                    padding: [2,0,2,4]
+                    size_hint_y: None
+                    height: 50
+
+                    Button:
+                        id: com13
+                        text: "ShutDown Leds"
+                        on_press: app.WriteFromButton("Oe")
+
+                GridLayout:
+                    rows: 1
+                    canvas:
+                        Color:
+                            rgba: (1, 2, 1, 1)
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [5,]
+
                     Label:
                         id: output
                         color: (0,0,0)
