@@ -212,6 +212,9 @@ void ExecuteInstruction(){
         if (AllOff()){
           valid_instruction = true;
         }
+        else if(UpdateEEPROM()){
+          valid_instruction = true;
+        }
     }
     else if (separatorcounter == 1){
         Serial.print("Instruction: ");
@@ -287,8 +290,6 @@ bool LedDWrite(){
         if (inttargetvalue >= 0 && inttargetvalue <= 1){
             L1_digital = inttargetvalue;
             L1_analog = 0;
-            PutEEPROM(L1_digital_rom, L1_digital);
-            PutEEPROM(L1_analog_rom, L1_analog);
             return true;
         }
     }
@@ -296,8 +297,6 @@ bool LedDWrite(){
         if (inttargetvalue >= 0 && inttargetvalue <= 1){
             L2_digital = inttargetvalue;
             L2_analog = 0;
-            PutEEPROM(L2_digital_rom, L2_digital);
-            PutEEPROM(L2_analog_rom, L2_analog);
             return true;
         }
     }
@@ -310,8 +309,6 @@ bool LedAWrite(){
         if (inttargetvalue >= 0 && inttargetvalue <= 255){
             L1_digital = 0;
             L1_analog = inttargetvalue;
-            PutEEPROM(L1_digital_rom, L1_digital);
-            PutEEPROM(L1_analog_rom, L1_analog);
             return true;
         }
     }
@@ -319,8 +316,6 @@ bool LedAWrite(){
         if (inttargetvalue >= 0 && inttargetvalue <= 255){
             L2_digital = 0;
             L2_analog = inttargetvalue;
-            PutEEPROM(L2_digital_rom, L2_digital);
-            PutEEPROM(L2_analog_rom, L2_analog);
             return true;
         }
     }
@@ -333,7 +328,6 @@ bool LedFrecuency(){
         if (inttargetvalue >= 0 && inttargetvalue <= 100){
             L1_top = inttargetvalue;
             L1_counter = 0;
-            PutEEPROM(L1_top_rom, L1_top);
             return true;
         }
     }
@@ -341,9 +335,18 @@ bool LedFrecuency(){
         if (inttargetvalue >= 0 && inttargetvalue <= 100){
             L2_top = inttargetvalue;
             L2_counter = 0;
-            PutEEPROM(L2_top_rom, L2_top);
             return true;
         }
+    }
+    return false;
+}
+
+bool UpdateEEPROM(){
+    if (instruction == "E\n"){
+        Serial.print(" --> ");
+        Serial.print("Data Uploaded To EEPROM");
+        UpdateAllData();
+        return true;
     }
     return false;
 }
@@ -359,8 +362,6 @@ bool AllOff(){
         L2_analog = 0;
         L1_top = 0;
         L2_top = 0;
-
-        UpdateAllData();
         return true;
     }
     return false;
