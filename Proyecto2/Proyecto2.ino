@@ -208,8 +208,9 @@ void InstructionParse(){
 void ExecuteInstruction(){
     if (separatorcounter == 0){
         Serial.print("Instruction: ");
-        Serial.print(instruction[0]);
-        Serial.print(instruction[1]);
+        if (sizeof(target) >= 0){
+          Serial.print(instruction[0]);
+        }
         if (AllOff()){
           valid_instruction = true;
         }
@@ -222,7 +223,10 @@ void ExecuteInstruction(){
         Serial.print(instruction);
         Serial.print(" --> ");
         Serial.print("Target: ");
-        Serial.print(target);
+        if (sizeof(target) >= 1){
+          Serial.print(target[0]);
+          Serial.print(target[1]);
+        }
         
         if (SwitchState()){
             valid_instruction = true;
