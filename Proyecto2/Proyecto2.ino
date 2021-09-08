@@ -72,15 +72,8 @@ void loop() {
     if (Serial.available() > 0){
         data = Serial.read();
         InstructionParse();
-        if (data == 101){
+        if (data == 10){
             ExecuteInstruction();
-        }
-        else if (data == 10){
-          valid_instruction = false;
-          separatorcounter = 0;
-          instruction = "";
-          target = "";
-          targetvalue = "";
         }
     }
     interrupts();
@@ -203,7 +196,9 @@ void InstructionParse(){
         instruction = instruction + (char)data;
     }
     else if (separatorcounter == 1){
+      if (data != 101){
         target = target + (char)data;
+      }
     }
     else if (separatorcounter == 2){
         targetvalue = targetvalue + (char)data;
@@ -213,16 +208,17 @@ void InstructionParse(){
 void ExecuteInstruction(){
     if (separatorcounter == 0){
         Serial.print("Instruction: ");
-        Serial.println(instruction);
+        Serial.print(instruction);
         if (AllOff()){
           valid_instruction = true;
         }
     }
     else if (separatorcounter == 1){
         Serial.print("Instruction: ");
-        Serial.println(instruction);
+        Serial.print(instruction);
+        Serial.print(" --> ");
         Serial.print("Target: ");
-        Serial.println(target);
+        Serial.print(target);
         
         if (SwitchState()){
             valid_instruction = true;
@@ -230,12 +226,14 @@ void ExecuteInstruction(){
     }
     else if (separatorcounter == 2){
         Serial.print("Instruction: ");
-        Serial.println(instruction);
+        Serial.print(instruction);
+        Serial.print(" --> ");
         Serial.print("Target: ");
-        Serial.println(target);
+        Serial.print(target);
+        Serial.print(" --> ");
         Serial.print("Target value: ");
         inttargetvalue = targetvalue.toInt();
-        Serial.println(inttargetvalue);
+        Serial.print(inttargetvalue);
         
         if (LedDWrite()){
             valid_instruction = true;
@@ -249,7 +247,8 @@ void ExecuteInstruction(){
     }
 
     if (valid_instruction == false){
-        Serial.println("Invalid Instruction, please check");
+        Serial.print(" Error: ");
+        Serial.print("Invalid Instruction, please check");
     }
     valid_instruction = false;
     separatorcounter = 0;
@@ -260,21 +259,22 @@ void ExecuteInstruction(){
 
 //Catches the R command and its values
 bool SwitchState(){
+    Serial.print(" --> ");
     if (instruction == "R" && target == "S0\n"){
         if (S0_value > 0){
-            Serial.println("Button 0 Presed");
+            Serial.print("Button 0 Presed");
         }
         else{
-            Serial.println("Button 0 Not Pressed");
+            Serial.print("Button 0 Not Pressed");
         }
         return true;
     }
     else if (instruction == "R" && target == "S1\n"){
         if (S1_value > 0){
-            Serial.println("Button 1 Presed");
+            Serial.print("Button 1 Presed");
         }
         else{
-            Serial.println("Button 1 Not Pressed");
+            Serial.print("Button 1 Not Pressed");
         }
         return true;
     }
@@ -350,8 +350,9 @@ bool LedFrecuency(){
 
 //Set all values to 0
 bool AllOff(){
-    if (instruction == "Oe"){
-        Serial.println("Shuting down all leds");
+    if (instruction == "O\n"){
+        Serial.print(" --> ");
+        Serial.print("Shuting down all leds");
         L1_digital = 0;
         L1_analog = 0;
         L2_digital = 0;

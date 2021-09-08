@@ -125,54 +125,54 @@
                     Button:
                         id: com1
                         text: "L1: Analog 20"
-                        on_press: app.WriteFromButton("A,L1,20e")
+                        on_press: app.WriteFromButton("A,L1,20")
                     Button:
                         id: com2
                         text: "L1: Analog 80"
-                        on_press: app.WriteFromButton("A,L1,80e")
+                        on_press: app.WriteFromButton("A,L1,80")
                     Button:
                         id: com3
                         text: "L1: Blink 400ms"
-                        on_press: app.WriteFromButton("B,L1,40e")
+                        on_press: app.WriteFromButton("B,L1,40")
 
                     Button:
                         id: com4
                         text: "L2: Analog 40"
-                        on_press: app.WriteFromButton("A,L2,40e")
+                        on_press: app.WriteFromButton("A,L2,40")
                     Button:
                         id: com5
                         text: "L2: Analog 80"
-                        on_press: app.WriteFromButton("A,L2,80e")
+                        on_press: app.WriteFromButton("A,L2,80")
                     Button:
                         id: com6
                         text: "L2: Blink 200ms"
-                        on_press: app.WriteFromButton("B,L2,20e")
+                        on_press: app.WriteFromButton("B,L2,20")
 
                     Button:
                         id: com7
                         text: "L1: Digital Low"
-                        on_press: app.WriteFromButton("W,L1,0e")
+                        on_press: app.WriteFromButton("W,L1,0")
                     Button:
                         id: com8
                         text: "L1: Digital High"
-                        on_press: app.WriteFromButton("W,L1,1e")
+                        on_press: app.WriteFromButton("W,L1,1")
                     Button:
                         id: com9
                         text: "L1: Blink 800ms"
-                        on_press: app.WriteFromButton("B,L1,80e")
+                        on_press: app.WriteFromButton("B,L1,80")
 
                     Button:
                         id: com10
                         text: "L2: Digital Low"
-                        on_press: app.WriteFromButton("W,L2,0e")
+                        on_press: app.WriteFromButton("W,L2,0")
                     Button:
                         id: com11
                         text: "L2: Digital High"
-                        on_press: app.WriteFromButton("W,L2,1e")
+                        on_press: app.WriteFromButton("W,L2,1")
                     Button:
                         id: com12
                         text: "L2: Blink 1000ms"
-                        on_press: app.WriteFromButton("B,L2,100e")
+                        on_press: app.WriteFromButton("B,L2,100")
                 
                 GridLayout:
                     rows: 1
@@ -182,8 +182,18 @@
 
                     Button:
                         id: com13
+                        text: "Button S0"
+                        on_press: app.WriteFromButton("R,S0")
+
+                    Button:
+                        id: com13
                         text: "ShutDown Leds"
-                        on_press: app.WriteFromButton("Oe")
+                        on_press: app.WriteFromButton("O")
+
+                    Button:
+                        id: com13
+                        text: "Button S1"
+                        on_press: app.WriteFromButton("R,S1")
 
                 GridLayout:
                     rows: 1

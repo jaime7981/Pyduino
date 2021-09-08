@@ -38,7 +38,7 @@ class PyduinoApp(App):
                     
                     finalstring = ""
                     for newline in self.terminal_output:
-                        finalstring = finalstring + newline + "\n"
+                        finalstring = finalstring + str(newline.split("'")[1]) + "\n"
                     self.root.ids.output.text = finalstring
         except Exception as e:
             self.root.ids.connectstatus.text = "Arduino disconected"
@@ -51,7 +51,7 @@ class PyduinoApp(App):
         try:
             if (self.conection == True and self.arduino != None):
                 if (str(self.root.ids.inputcommand) != ''):
-                    self.arduino.write(bytes(str(self.root.ids.inputcommand.text), 'utf-8'))
+                    self.arduino.write(bytes(str(self.root.ids.inputcommand.text + "\n"), 'utf-8'))
         except Exception as e:
             self.root.ids.connectstatus.text = "Arduino disconected"
             self.root.ids.connect.text = "Conect"
@@ -62,7 +62,7 @@ class PyduinoApp(App):
     def WriteFromButton(self, buttoncommand):
         try:
             if (self.conection == True and self.arduino != None):
-                self.arduino.write(bytes(str(buttoncommand), 'utf-8'))
+                self.arduino.write(bytes(str(buttoncommand) + "\n", 'utf-8'))
         except Exception as e:
             self.root.ids.connectstatus.text = "Arduino disconected"
             self.root.ids.connect.text = "Conect"
