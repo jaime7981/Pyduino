@@ -208,7 +208,8 @@ void InstructionParse(){
 void ExecuteInstruction(){
     if (separatorcounter == 0){
         Serial.print("Instruction: ");
-        Serial.print(instruction);
+        Serial.print(instruction[0]);
+        Serial.print(instruction[1]);
         if (AllOff()){
           valid_instruction = true;
         }
